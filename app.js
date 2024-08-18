@@ -1,15 +1,19 @@
+// app.js
 const express = require('express');
+const sequelize = require('./db');
+const excelRoutes = require('./routes/fileRouter');
+
 const app = express();
-const routes = require('./routes/fileRouter');
-const fileUpload = require('express-fileupload');
+const PORT = 4000;
+
+sequelize.sync().then(() => {
+  console.log('Database & tables created!');
+});
 
 
 app.use(express.json());
-app.use(fileUpload());
+app.use('/', excelRoutes);
 
-app.use('/', routes);
-
-const PORT = 4000;
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`Server is running on port ${PORT}`);
 });
