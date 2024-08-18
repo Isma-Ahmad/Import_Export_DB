@@ -10,7 +10,7 @@ const { v4: uuidv4 } = require('uuid');
 const upload = multer({ dest: 'uploads/' });
 
 const importFromExcel = async (req, res) => {
-    try {
+
       if (!req.file) {
         return res.status(400).send('No file uploaded.');
       }
@@ -41,15 +41,12 @@ const importFromExcel = async (req, res) => {
       });
 
       res.status(200).send('File imported successfully.');
-    } catch (err) {
-      res.status(500).json({ error: err.message });
-    }
+
   };
   
   
 
 const exportAndGenerateLink = async (req, res) => {
-  try {
 
     const users = await User.findAll();
 
@@ -80,10 +77,7 @@ const exportAndGenerateLink = async (req, res) => {
     const downloadUrl = `${req.protocol}://${req.get('host')}/downloads/${filename}`;
 
     res.json({ downloadUrl });
-  } catch (error) {
-    console.error('Error exporting data to Excel:', error);
-    res.status(500).json({ error: 'Failed to export data' });
-  }
+ 
 };
 
 
